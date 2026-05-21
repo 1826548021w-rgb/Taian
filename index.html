@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>魅力泰安——五岳独尊</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    header {
+      background: linear-gradient(to right, #1b5e20, #2e7d32);
+      color: white;
+      padding: 20px 50px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav h1 {
+      font-size: 28px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffd54f;
+    }
+
+    /* --- 背景音乐控制按钮样式 --- */
+    .music-btn {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .music-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    /* 播放时的旋转动画 */
+    .music-playing {
+      animation: rotateMusic 4s linear infinite;
+    }
+
+    @keyframes rotateMusic {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hero {
+      height: 90vh;
+      background: url('image_e819b0.png') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h2 {
+      font-size: 56px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 22px;
+    }
+
+    section {
+      padding: 70px 10%;
+      background: white;
+      margin-bottom: 15px;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .title h2 {
+      font-size: 38px;
+      color: #1b5e20;
+    }
+
+    .intro p {
+      font-size: 18px;
+      text-indent: 2em;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-content h3 {
+      margin-bottom: 10px;
+      color: #2e7d32;
+    }
+
+    .card-content p {
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    /* --- 新增打卡按钮和计数样式 --- */
+    .punch-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px dashed #eee;
+    }
+
+    .punch-btn {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 6px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .punch-btn:hover {
+      background-color: #1b5e20;
+    }
+
+    .punch-btn:active {
+      transform: scale(0.95);
+    }
+
+    .punch-count {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .punch-count span {
+      font-weight: bold;
+      color: #e65100;
+    }
+
+    .food {
+      background: #f9f9f9;
+    }
+
+    .marketing {
+      background: #e8f5e9;
+      border-radius: 20px;
+    }
+
+    footer {
+      background: #1b1b1b;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .nav-right {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .hero h2 {
+        font-size: 36px;
+      }
+      .hero p {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" src="https://music.163.com/song/media/outer/url?id=1374057398.mp3" loop></audio>
+
+<header>
+  <nav>
+    <h1>魅力泰安</h1>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#home">首页</a></li>
+        <li><a href="#scenery">泰山风景</a></li>
+        <li><a href="#food">泰安美食</a></li>
+        <li><a href="#culture">历史文化</a></li>
+        <li><a href="#marketing">旅游推广</a></li>
+      </ul>
+      <div class="music-btn" id="musicBtn" title="播放/暂停背景音乐">
+        <svg id="musicIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h2>五岳独尊 · 魅力泰安</h2>
+    <p>登泰山而小天下，感受历史与自然交汇的文化名城</p>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="title">
+    <h2>泰安简介</h2>
+  </div>
+  <p>
+    山东省泰安市位于山东省中部，因泰山而闻名全国。泰山作为中国五岳之首，既是世界文化与自然双遗产，也是中华民族精神的重要象征。这里不仅拥有壮丽的自然风景，还有深厚的历史文化底蕴，每年吸引大量游客前来观光旅游。
+  </p>
+</section>
+
+<section id="scenery">
+  <div class="title">
+    <h2>泰山风景</h2>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <img src="image_e819b0.png" alt="泰山日出">
+      <div class="card-content">
+        <h3>泰山日出</h3>
+        <p>泰山日出被誉为天下奇观，金色阳光洒满群山，壮丽震撼。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="scenery-sunrise">📍 我要打卡</button>
+          <div class="punch-count">已打卡: <span id="count-scenery-sunrise">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image_e819cd.jpg" alt="南天门">
+      <div class="card-content">
+        <h3>南天门</h3>
+        <p>南天门位于泰山十八盘尽头，是登顶的重要标志。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="scenery-gate">📍 我要打卡</button>
+          <div class="punch-count">已打卡: <span id="count-scenery-gate">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image_e816ee.jpg" alt="十八盘">
+      <div class="card-content">
+        <h3>十八盘</h3>
+        <p>十八盘是泰山最险峻的登山路段，也是游客挑战自我的象征。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="scenery-18pan">📍 我要打卡</button>
+          <div class="punch-count">已打卡: <span id="count-scenery-18pan">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="food" id="food">
+  <div class="title">
+    <h2>泰安美食</h2>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <img src="image_55fdc5.jpg" alt="泰山煎饼">
+      <div class="card-content">
+        <h3>泰山煎饼</h3>
+        <p>山东特色传统美食，口感香脆，深受游客喜爱。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="food-jianbing">😋 吃过打卡</button>
+          <div class="punch-count">已品尝: <span id="count-food-jianbing">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image_5600ee.jpg" alt="肥城桃">
+      <div class="card-content">
+        <h3>肥城桃</h3>
+        <p>肥城桃个大味甜，被誉为“中国桃王”。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="food-peach">😋 吃过打卡</button>
+          <div class="punch-count">已品尝: <span id="count-food-peach">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image_5601c7.jpg" alt="泰安豆腐宴">
+      <div class="card-content">
+        <h3>泰安豆腐宴</h3>
+        <p>采用传统工艺制作，具有浓厚地方特色。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="food-tofu">😋 吃过打卡</button>
+          <div class="punch-count">已品尝: <span id="count-food-tofu">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="culture">
+  <div class="title">
+    <h2>历史文化</h2>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <img src="R.jpg" alt="封禅文化">
+      <div class="card-content">
+        <h3>封禅文化</h3>
+        <p>历代帝王曾在泰山举行封禅大典，体现中华文明历史。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="culture-fengchan">📖 了解打卡</button>
+          <div class="punch-count">已打卡: <span id="count-culture-fengchan">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="R (1).jpg" alt="岱庙">
+      <div class="card-content">
+        <h3>岱庙</h3>
+        <p>岱庙是古代祭祀泰山神的重要场所，建筑庄严宏伟。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="culture-daimiao">📍 我要打卡</button>
+          <div class="punch-count">已打卡: <span id="count-culture-daimiao">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="1812191504207769267.jpg" alt="石刻文化">
+      <div class="card-content">
+        <h3>石刻文化</h3>
+        <p>泰山石刻众多，展现了深厚的历史文化底蕴。</p>
+        <div class="punch-container">
+          <button class="punch-btn" data-id="culture-shike">📖 了解打卡</button>
+          <div class="punch-count">已打卡: <span id="count-culture-shike">0</span> 次</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="marketing" id="marketing">
+  <div class="title">
+    <h2>旅游营销推广</h2>
+  </div>
+  <p>
+    本网站以“宣传泰安文化、推广泰山旅游”为核心目标，通过展示泰山风景、美食文化和历史故事，吸引更多游客了解泰安、走进泰安。
+  </p>
+  <br>
+  <p>
+    网站设置了旅游攻略、特色景点与地方美食等栏目，能够帮助游客快速获取旅游信息。同时，通过搜索关键词优化，提高网站在搜索引擎中的曝光率。
+  </p>
+</section>
+
+<footer>
+  <p>魅力泰安宣传网站 | 山东泰安文化旅游展示</p>
+</footer>
+
+<script>
+  // --- 背景音乐控制 ---
+  const audio = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicBtn');
+
+  musicBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        musicBtn.classList.add('music-playing');
+      }).catch(err => console.log("播放被拦截：", err));
+    } else {
+      audio.pause();
+      musicBtn.classList.remove('music-playing');
+    }
+  });
+
+  document.addEventListener('click', () => {
+    if (audio.paused && !musicBtn.classList.contains('music-playing')) {
+      audio.play().then(() => {
+        musicBtn.classList.add('music-playing');
+      }).catch(() => {});
+    }
+  }, { once: true });
+
+
+  // --- 新增：打卡计数逻辑 ---
+  const punchButtons = document.querySelectorAll('.punch-btn');
+
+  // 初始化页面时：加载原本存好的打卡数据
+  punchButtons.forEach(btn => {
+    const id = btn.getAttribute('data-id');
+    const savedCount = localStorage.getItem(`punch-${id}`) || 0;
+    document.getElementById(`count-${id}`).innerText = savedCount;
+
+    // 为每个按钮绑定点击打卡事件
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // 阻止事件冒泡，避免触发音乐首次点击播放
+      
+      let currentCount = parseInt(localStorage.getItem(`punch-${id}`) || 0);
+      currentCount++;
+      
+      // 保存新次数到本地并更新到页面上
+      localStorage.setItem(`punch-${id}`, currentCount);
+      document.getElementById(`count-${id}`).innerText = currentCount;
+    });
+  });
+</script>
+
+</body>
+</html>
